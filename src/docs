@@ -1,0 +1,11 @@
+{
+  "role": "admin",
+  "email": "admin@fullsms.test",
+  "firstName": "Super",
+  "lastName": "Admin",
+  "phone": "+15551234567",
+  "password": "Admin123!",
+  "passwordHash": "$2a$10$n60D52Z2xTe4bX5720g65ewDcbf0/Fsjni78s64TSzQnHttiQBEKm",
+  "status": "active",
+  "refreshTokens": []
+}
