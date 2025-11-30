@@ -19,5 +19,5 @@ export default {
     templateId: process.env.EMAILJS_TEMPLATE_ID || '',
     publicKey: process.env.EMAILJS_PUBLIC_KEY || ''
   },
-  clientUrl: process.env.CLIENT_URL || 'http://localhost:5173,http://127.0.0.1:5173'
+  clientUrl: process.env.CLIENT_URL || 'https://full-sms.vercel.app'
 };
