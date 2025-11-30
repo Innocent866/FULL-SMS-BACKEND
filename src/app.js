@@ -22,16 +22,29 @@ const app = express();
 app.use(helmet());
 
 // CORS
-app.use(
-  cors({
-    origin: [
-      "https://full-sms.vercel.app",
-      "http://localhost:5173"
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    credentials: true
-  })
-);
+// app.use(
+//   cors({
+//     origin: [
+//       "https://full-sms.vercel.app",
+//       "http://localhost:5173"
+//     ],
+//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+//     credentials: true
+//   })
+// );
+
+app.use(cors({
+  origin: [
+    "https://full-sms.vercel.app",
+    "http://localhost:5173"
+  ],
+  methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+  allowedHeaders: "Content-Type,Authorization",
+  credentials: true
+}));
+
+app.options("*", cors());
+
 
 // Other middlewares
 app.use(compression());
@@ -42,8 +55,9 @@ app.use(morgan("dev"));
 
 // Health route
 app.get("/", (req, res) => {
-  res.send("Backend is running ✔");
+  res.send("School Management System API is running");
 });
+
 
 // API routes
 app.use("/api/auth", authRoutes);
