@@ -31,8 +31,7 @@ app.use(morgan("dev"));
 
 // Allow your frontend
 const allowedOrigins = [
-  "https://full-sms.vercel.app",
-  "http://localhost:5173"
+  "https://full-sms.vercel.app"
 ];
 
 app.use(
