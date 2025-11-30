@@ -10,7 +10,7 @@ const PORT = config.port;
   try {
     await connectDatabase();
     app.listen(PORT, () => {
-      logger.info(`SMS API listeni ${PORT}`);
+      logger.info(`SMS API listening: ${PORT}`);
     });
     // await createUser();
   } catch (error) {
