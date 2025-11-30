@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 
 import { notFoundHandler, errorHandler } from "./middleware/errorHandler.js";
+
 import authRoutes from "./routes/auth.routes.js";
 import parentRoutes from "./routes/parent.routes.js";
 import teacherRoutes from "./routes/teacher.routes.js";
@@ -17,56 +18,34 @@ import assignmentRoutes from "./routes/assignment.routes.js";
 
 const app = express();
 
-/* ----------------------------------
-   Security & Basic Middlewares
----------------------------------- */
+// Security
 app.use(helmet());
-app.use(compression());
-app.use(cookieParser());
-app.use(morgan("dev"));
 
-/* ----------------------------------
-   CORS CONFIG (FIXED)
----------------------------------- */
-
-// Allow your frontend
-const allowedOrigins = [
-  "https://full-sms.vercel.app"
-];
-
+// CORS
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow mobile apps, tools, and server-to-server
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      console.log("❌ Blocked by CORS:", origin);
-      return callback(new Error("Not allowed by CORS"), false);
-    },
-    credentials: true,
+    origin: [
+      "https://full-sms.vercel.app",
+      "http://localhost:5173"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true
   })
 );
 
-/* ----------------------------------
-   Body Parser
----------------------------------- */
+// Other middlewares
+app.use(compression());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(morgan("dev"));
 
-/* ----------------------------------
-   Health Check
----------------------------------- */
-app.get("/health", (req, res) => {
-  res.json({ status: "ok", uptime: process.uptime() });
+// Health route
+app.get("/", (req, res) => {
+  res.send("Backend is running ✔");
 });
 
-/* ----------------------------------
-   API Routes
----------------------------------- */
+// API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/parent", parentRoutes);
 app.use("/api/teacher", teacherRoutes);
@@ -76,9 +55,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/announcements", announcementRoutes);
 app.use("/api/assignments", assignmentRoutes);
 
-/* ----------------------------------
-   Error Handlers
----------------------------------- */
+// Error handlers
 app.use(notFoundHandler);
 app.use(errorHandler);
 
