@@ -19,23 +19,30 @@ import assignmentRoutes from './routes/assignment.routes.js';
 const app = express();
 
 app.use(helmet());
-const allowedOrigins = config.clientUrl
-  .split(',')
-  .map((origin) => origin.trim())
-  .filter(Boolean);
+// const allowedOrigins = config.clientUrl
+//   .split(',')
+//   .map((origin) => origin.trim())
+//   .filter(Boolean);
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    return callback(new Error(`Origin ${origin} not allowed by CORS`));
-  },
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+//       return callback(null, true);
+//     }
+//     return callback(new Error(`Origin ${origin} not allowed by CORS`));
+//   },
+//   credentials: true
+// };
+
+// app.use(cors(corsOptions));
+app.use(cors({
+  origin: [
+    "https://full-sms.vercel.app",   // your frontend
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   credentials: true
-};
-
-app.use(cors(corsOptions));
+}));
 app.options('*', cors(corsOptions));
 app.use(compression());
 app.use(express.json({ limit: '10mb' }));
