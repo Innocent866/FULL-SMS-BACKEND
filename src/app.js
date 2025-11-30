@@ -37,7 +37,7 @@ app.use(helmet());
 console.log(config.clientUrl);
 
 app.use(cors({origin: config.clientUrl}));
-app.options('*', cors(corsOptions));
+// app.options('*', cors(corsOptions));
 app.use(compression());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
