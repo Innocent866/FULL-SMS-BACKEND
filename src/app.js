@@ -5,7 +5,7 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 
-import config from './config/index.js';
+// import config from './config/index.js';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/auth.routes.js';
 import parentRoutes from './routes/parent.routes.js';
@@ -36,14 +36,8 @@ app.use(helmet());
 // };
 
 // app.use(cors(corsOptions));
-app.use(cors({
-  origin: [
-    "https://full-sms.vercel.app",   // your frontend
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  credentials: true
-}));
-app.options('*', cors(corsOptions));
+app.use(cors());
+// app.options('*', cors(corsOptions));
 app.use(compression());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
