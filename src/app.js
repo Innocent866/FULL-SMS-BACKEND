@@ -32,16 +32,11 @@ app.use(helmet());
 //     credentials: true
 //   })
 // );
-
-app.use(cors({
-  origin: [
-    "https://full-sms.vercel.app",
-    "http://localhost:5173"
-  ],
-  methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-  allowedHeaders: "Content-Type,Authorization",
-  credentials: true
-}));
+var corsOptions = {
+  origin: 'https://full-sms.vercel.app',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
 
 app.options("*", cors());
 
